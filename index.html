@@ -11,19 +11,19 @@
     }
     input {
       padding: 0.5rem;
-      font-size: 1rem;
+      font-size: 3rem;
       margin-bottom: 1rem;
       width: 60%;
     }
     h1 {
-      font-size: 2rem;
+      font-size: 5rem;
     }
     #cantidad {
       font-size: 1.5rem;
       margin: 1rem 0;
     }
     button {
-      font-size: 1.2rem;
+      font-size: 3rem;
       padding: 0.5rem 1rem;
       margin: 0.5rem;
       cursor: pointer;
@@ -61,10 +61,10 @@
   <button id="removeBtn"  style="visibility: hidden;">Sacar Producto</button>
 
   <div id="listaProductos">
-    <h2>Lista de Productos</h2>
+    <h2 style="font-size: 3rem;">Lista de Productos</h2>
     <div>
-        <button onclick="ordenarPorVentas()" style="background-color: blue;">Ordenar por ventas</button>
-        <button onclick="ordenarPorCantidad()" style="background-color: blue;">Reponer stock</button>
+        <button onclick="ordenarPorVentas()" style="background-color: blue;">Ordenar por mas vendidos</button>
+        <button onclick="ordenarPorCantidad()" style="background-color: blue;">Filtrar Stock bajo</button>
     </div>
 
     <input type="text" id="buscadorInput" placeholder="Buscar producto..." style="margin-bottom: 10px; width: 100%;">
@@ -73,14 +73,14 @@
   </div>
 
   <div style="margin: 70px;">
-    <h2 id="ingresosBrutos">Ingresos brutos: $0</h2>
+    <h2 id="ingresosBrutos" style="font-size: 2rem;">Ingresos brutos: $0</h2>
     <h2 id="comprarMercaderia">Comprar mercaderia: $0</h2>
     <h2 id="negocioCrece">Negocio crece: $0</h2>
     <h2 id="marketing">Marketing: $0</h2>
     <h2 id="gastar">Ingresos netos: $0</h2>
   </div>
   
-  <h2 id="totalGastos">Mercaderia actual: $0</h2>
+  <h2 id="totalGastos" style="font-size: 2rem;">Mercaderia actual: $0</h2>
 
 
 
@@ -222,11 +222,11 @@
         const div = document.createElement("div");
         div.className = "producto";
         div.innerHTML = `
-            <span style="padding: 30px; font-size: 20px; margin: 30px">${nombre}</span>
-            <span style="padding: 30px; display: flex; margin: 30px">
+            <span style="padding: 30px; font-size: 3rem; margin: 30px">${nombre}</span>
+            <span style="padding: 30px; display: flex; font-size: 2rem; margin: 30px">
             Cantidad: ${data.cantidad ?? 0}<br>
             Costo: $${data.costo != null ? Math.round(data.costo) : 0}<br>
-            <span style="font-size: 20px; color: green; margin: 30px">
+            <span style="font-size: 4rem; color: green; margin: 30px">
             Precio: $${data.precio != null ? Math.round(data.precio) : 0}</span><br>
             <button onclick="venderProducto('${nombre}')" style="background-color: green">Vender</button>
             <button onclick="agregarProducto('${nombre}')" style="background-color: red">Agregar</button>
