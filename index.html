@@ -5,44 +5,104 @@
   <title>Stock Multi Clean</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
       text-align: center;
       padding: 2rem;
     }
-    input {
-      padding: 0.5rem;
-      font-size: 3rem;
+    h1 {
+      font-size: 4rem;
       margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+    input, button {
+      font-size: 1.25rem;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    input[type="text"], input[type="number"] {
       width: 60%;
     }
-    h1 {
-      font-size: 5rem;
-    }
-    #cantidad {
-      font-size: 1.5rem;
-      margin: 1rem 0;
-    }
     button {
-      font-size: 3rem;
-      padding: 0.5rem 1rem;
-      margin: 0.5rem;
-      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    .danger {
+      background-color: #e74c3c;
+    }
+    .danger:hover {
+      background-color: #c0392b;
+    }
+    .success {
+      background-color: #2ecc71;
+    }
+    .success:hover {
+      background-color: #27ae60;
+    }
+    .section {
+      margin-top: 2rem;
+      padding: 1rem;
     }
     #listaProductos {
-      margin-top: 2rem;
-      max-width: 400px;
-      margin-inline: auto;
-      border-top: 1px solid #ccc;
-      padding-top: 1rem;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-    .producto {
-      padding: 0.5rem 0;
-      border-bottom: 1px solid #eee;
+    #productos .producto {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: flex-start;
+      background-color: #ecf0f1;
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 10px;
     }
-    .producto span {
-      font-weight: bold;
+    .producto h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .producto-data {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .producto-data span {
+      font-size: 1.1rem;
+      background-color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    }
+    .producto-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .stats h2 {
+      font-size: 1.5rem;
+      color: #34495e;
+      margin: 0.3rem 0;
+    }
+    @media (max-width: 600px) {
+      input[type="text"], input[type="number"] {
+        width: 90%;
+      }
+      .producto-data, .producto-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
     }
   </style>
 </head>
@@ -64,7 +124,7 @@
     <h2 style="font-size: 3rem;">Lista de Productos</h2>
     <div>
         <button onclick="ordenarPorVentas()" style="background-color: blue;">Ordenar por mas vendidos</button>
-        <button onclick="ordenarPorCantidad()" style="background-color: blue;">Filtrar Stock bajo</button>
+        <button onclick="ordenarPorCantidad()" style="background-color: blue;">Ordenar stock bajo</button>
     </div>
 
     <input type="text" id="buscadorInput" placeholder="Buscar producto..." style="margin-bottom: 10px; width: 100%;">
@@ -212,6 +272,21 @@
         }
     };
 
+    window.sacarProducto = async (nombre) => {
+        const ref = doc(db, "productos", nombre);
+        const snap = await getDoc(ref);
+
+        if (snap.exists()) {
+            const actual = snap.data().cantidad || 0;
+            const nuevaCantidad = Math.max(0, actual - 1);
+            await updateDoc(ref, { cantidad: nuevaCantidad });
+        }
+    };
+
+    function formatearDinero(valor) {
+      return valor.toLocaleString('es-AR');
+    }
+
     function renderizarProductos() {
     const filtro = document.getElementById("buscadorInput").value.trim().toLowerCase();
     productosContainer.innerHTML = "";
@@ -222,15 +297,16 @@
         const div = document.createElement("div");
         div.className = "producto";
         div.innerHTML = `
+            <button onclick="eliminarProducto('${nombre}')" style="background-color: red">🗑️</button>
             <span style="padding: 30px; font-size: 3rem; margin: 30px">${nombre}</span>
             <span style="padding: 30px; display: flex; font-size: 2rem; margin: 30px">
             Cantidad: ${data.cantidad ?? 0}<br>
             Costo: $${data.costo != null ? Math.round(data.costo) : 0}<br>
             <span style="font-size: 4rem; color: green; margin: 30px">
-            Precio: $${data.precio != null ? Math.round(data.precio) : 0}</span><br>
+            Precio: $${data.precio != null ? formatearDinero(Math.round(data.precio)) : 0}</span><br>
             <button onclick="venderProducto('${nombre}')" style="background-color: green">Vender</button>
             <button onclick="agregarProducto('${nombre}')" style="background-color: red">Agregar</button>
-            <button onclick="eliminarProducto('${nombre}')" style="background-color: red">🗑️</button>
+            <button onclick="sacarProducto('${nombre}')" style="background-color: blue">Sacar</button>
             </span>
         `;
         productosContainer.appendChild(div);
