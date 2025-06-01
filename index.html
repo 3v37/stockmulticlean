@@ -358,6 +358,12 @@
     };
 
 
+    document.body.addEventListener("click", (e) => {
+      if (e.target.tagName === "BUTTON") {
+        alert("Botón clickeado !");
+      }
+    });
+    
   </script>
 </body>
 </html>
