@@ -280,6 +280,12 @@
             const actual = snap.data().cantidad || 0;
             const nuevaCantidad = Math.max(0, actual - 1);
             await updateDoc(ref, { cantidad: nuevaCantidad });
+
+            const sacarRef = doc(collection(db, "sacar"));
+            await setDoc(sacarRef, {
+              nombre: nombre,
+              fecha: new Date().toISOString()
+            });
         }
     };
 
@@ -357,13 +363,14 @@
         renderizarProductos();
     };
 
-
+    
     document.body.addEventListener("click", (e) => {
       if (e.target.tagName === "BUTTON") {
         alert("Botón clickeado !");
       }
     });
-    
+
+
   </script>
 </body>
 </html>
