@@ -5,105 +5,131 @@
   <title>Stock Multi Clean</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f7fa;
-      color: #333;
-      text-align: center;
-      padding: 2rem;
-    }
-    h1 {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      color: #2c3e50;
-    }
-    input, button {
-      font-size: 1.25rem;
-      padding: 0.75rem;
-      margin: 0.5rem 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    input[type="text"], input[type="number"] {
-      width: 60%;
-    }
-    button {
-      background-color: #3498db;
-      color: white;
-      border: none;
-      transition: background-color 0.3s;
-    }
-    button:hover {
-      background-color: #2980b9;
-    }
-    .danger {
-      background-color: #e74c3c;
-    }
-    .danger:hover {
-      background-color: #c0392b;
-    }
-    .success {
-      background-color: #2ecc71;
-    }
-    .success:hover {
-      background-color: #27ae60;
-    }
-    .section {
-      margin-top: 2rem;
-      padding: 1rem;
-    }
-    #listaProductos {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-    #productos .producto {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      background-color: #ecf0f1;
-      margin: 1rem 0;
-      padding: 1rem;
-      border-radius: 10px;
-    }
-    .producto h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .producto-data {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .producto-data span {
-      font-size: 1.1rem;
-      background-color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.05);
-    }
-    .producto-buttons {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .stats h2 {
-      font-size: 1.5rem;
-      color: #34495e;
-      margin: 0.3rem 0;
-    }
-    @media (max-width: 600px) {
-      input[type="text"], input[type="number"] {
-        width: 90%;
-      }
-      .producto-data, .producto-buttons {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        text-align: center;
+        padding: 2rem;
+        font-size: 3rem;
+        }
+        h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+        }
+        h2 {
+        font-size: 2rem;
+        }
+        input, button {
+        font-size: 2rem;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        }
+        input[type="text"], input[type="number"] {
+        width: 60%;
+        }
+        button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        transition: background-color 0.3s;
+        }
+        button:hover {
+        background-color: #2980b9;
+        }
+        .danger {
+        background-color: #e74c3c;
+        }
+        .danger:hover {
+        background-color: #c0392b;
+        }
+        .success {
+        background-color: #2ecc71;
+        }
+        .success:hover {
+        background-color: #27ae60;
+        }
+        .section {
+        margin-top: 2rem;
+        padding: 1rem;
+        }
+        #listaProductos {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        #productos .producto {
+        display: flex;
         flex-direction: column;
-        align-items: stretch;
-      }
+        align-items: flex-start;
+        background-color: #ecf0f1;
+        margin: 1rem 0;
+        padding: 1rem;
+        border-radius: 10px;
+        }
+        .producto h3 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        }
+        .producto-data {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        }
+        .producto-data span {
+        font-size: 2.8rem;
+        background-color: #fff;
+        padding: 0.75rem 1.25rem;
+        border-radius: 6px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.05);
+        }
+        .producto-buttons {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        }
+        .stats h2 {
+        font-size: 2rem;
+        color: #34495e;
+        margin: 0.3rem 0;
+        }
+
+        /* ✅ Versión móvil */
+        @media (max-width: 600px) {
+        html {
+            font-size: 110%;
+        }
+        body {
+            font-size: 4rem;
+            padding: 1rem;
+        }
+        h1 {
+            color: red;
+            font-size: 11rem;
+        }
+        h2 {
+            font-size: 2.5rem;
+        }
+        input[type="text"], input[type="number"], button, #buscadorInput {
+            width: 100%;
+            font-size: 2rem;
+            padding: 1.2rem;
+        }
+        .producto-data span {
+            font-size: 1.8rem;
+        }
+        .producto button {
+            font-size: 1.8rem;
+            padding: 1.2rem;
+        }
     }
+
   </style>
 </head>
 <body>
@@ -127,7 +153,7 @@
         <button onclick="ordenarPorCantidad()" style="background-color: blue;">Ordenar stock bajo</button>
     </div>
 
-    <input type="text" id="buscadorInput" placeholder="Buscar producto..." style="margin-bottom: 10px; width: 100%;">
+    <input type="text" id="buscadorInput" placeholder="Buscar producto..." style="height: 150px; margin-bottom: 20px; width: 100%; padding: 1.2rem; font-size: 4rem; border-radius: 12px; border: 2px solid #ccc;">
     <div id="productos"></div>
     <button id="deleteBtn" style="visibility: hidden;"></button>
   </div>
@@ -333,15 +359,15 @@
         div.className = "producto";
         div.innerHTML = `
             <button onclick="eliminarProducto('${nombre}')" style="background-color: red">🗑️</button>
-            <span style="padding: 30px; font-size: 3rem; margin: 30px">${nombre}</span>
+            <span style="padding: 30px; font-size: 5rem; margin: 30px">${nombre}</span>
             <span style="padding: 30px; display: flex; font-size: 2rem; margin: 30px">
             Cantidad: ${data.cantidad ?? 0}<br>
             Costo: $${data.costo != null ? Math.round(data.costo) : 0}<br>
             <span style="font-size: 4rem; color: green; margin: 30px">
             Precio: $${data.precio != null ? formatearDinero(Math.round(data.precio)) : 0}</span><br>
-            <button onclick="venderProducto('${nombre}')" style="background-color: green">Vender</button>
-            <button onclick="agregarProducto('${nombre}')" style="background-color: red">Agregar</button>
-            <button onclick="sacarProducto('${nombre}')" style="background-color: blue">Sacar</button>
+            <button onclick="venderProducto('${nombre}')" style="font-size: 3rem; background-color: green">Vender</button>
+            <button onclick="agregarProducto('${nombre}')" style="font-size: 3rem; background-color: red">Agregar</button>
+            <button onclick="sacarProducto('${nombre}')" style="font-size: 3rem; background-color: blue">Sacar</button>
             </span>
         `;
         productosContainer.appendChild(div);
