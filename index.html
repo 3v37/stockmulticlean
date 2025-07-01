@@ -249,17 +249,46 @@
         const ref = doc(db, "productos", nombre);
         const snap = await getDoc(ref);
 
-        if (snap.exists()) {
-            const actual = snap.data().cantidad || 0;
-            const ventas = snap.data().ventas || 0;
-            const nuevaCantidad = Math.max(0, actual - 1);
-            await updateDoc(ref, { cantidad: nuevaCantidad, ventas: ventas + 1 });
-        }
+        if (!snap.exists()) return;
 
-        const ventasSnap = await getDoc(ventasRef);
-        const ventasActuales = ventasSnap.exists() ? ventasSnap.data().dinero || 0 : 0;
-        await setDoc(ventasRef, { dinero: ventasActuales + snap.data().precio });
+        const producto = snap.data();
+        const precio = producto.precio || 0;
+
+        // Mostrar botones para seleccionar método de pago
+        const metodo = prompt("Seleccionar método de pago:\n1. Efectivo\n2. Tarjeta\n3. Transferencia");
+
+        const metodoPago = metodo === "1" ? "efectivo"
+                            : metodo === "2" ? "tarjeta"
+                            : metodo === "3" ? "transferencia"
+                            : null;
+
+        if (!metodoPago) return alert("Método inválido");
+
+        const ventasTipoRef = doc(db, "ventas", metodoPago);
+        const totalRef = doc(db, "ventas", "total");
+
+        const [tipoSnap, totalSnap] = await Promise.all([
+            getDoc(ventasTipoRef),
+            getDoc(totalRef)
+        ]);
+
+        const actual = producto.cantidad || 0;
+        const ventas = producto.ventas || 0;
+
+        const nuevaCantidad = Math.max(0, actual - 1);
+
+        await updateDoc(ref, {
+            cantidad: nuevaCantidad,
+            ventas: ventas + 1
+        });
+
+        const actualTipo = tipoSnap.exists() ? tipoSnap.data().dinero || 0 : 0;
+        const actualTotal = totalSnap.exists() ? totalSnap.data().dinero || 0 : 0;
+
+        await setDoc(ventasTipoRef, { dinero: actualTipo + precio });
+        await setDoc(totalRef, { dinero: actualTotal + precio });
     };
+
 
     window.agregarProducto = async (nombre) => {
         const ref = doc(db, "productos", nombre);
